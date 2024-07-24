@@ -12,6 +12,16 @@ function Nav() {
     { href: "#partners", children: "Partners" },
     { href: "#reviews", children: "Reviews" },
   ];
+  const navigation = [
+    { name: "Dashboard", href: "#", current: true },
+    { name: "Team", href: "#", current: false },
+    { name: "Projects", href: "#", current: false },
+    { name: "Calendar", href: "#", current: false },
+  ];
+
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   return (
     <Disclosure as="nav">
@@ -23,16 +33,16 @@ function Nav() {
                 href="#"
                 children={<img src={Kobodrop} alt="Kobodrop logo" />}
               />
-              <div className="ml-4 hidden items-center space-x-4 sm:ml-6 sm:flex lg:ml-8 lg:space-x-8">
-                {navLinks.map((link, index) => (
-                  <ButtonLink
-                    key={index}
-                    href={link.href}
-                    children={link.children}
-                    className={textLinkClasses}
-                  />
-                ))}
-              </div>
+            </div>
+            <div className="ml-4 hidden items-center space-x-4 sm:ml-6 sm:flex lg:ml-8 lg:space-x-8">
+              {navLinks.map((link, index) => (
+                <ButtonLink
+                  key={index}
+                  href={link.href}
+                  children={link.children}
+                  className={textLinkClasses}
+                />
+              ))}
             </div>
             <ButtonLink
               href="https://play.google.com"
@@ -48,17 +58,25 @@ function Nav() {
               )}
             </Disclosure.Button>
           </div>
-          <Disclosure.Panel className="space-y-1 px-4 sm:hidden">
-            {navLinks.map((link, index) => (
-              <Disclosure.Button
-                className="block"
-                as="a"
-                href="#features"
-                key={index}
-              >
-                {link.children}
-              </Disclosure.Button>
-            ))}
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {navigation.map((item) => (
+                <Disclosure.Button
+                  key={item.name}
+                  as="a"
+                  href={item.href}
+                  aria-current={item.current ? "page" : undefined}
+                  className={classNames(
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium",
+                  )}
+                >
+                  {item.name}
+                </Disclosure.Button>
+              ))}
+            </div>
           </Disclosure.Panel>
         </>
       )}
